@@ -61,6 +61,8 @@ def validate_reversing(algo: Callable) -> bool:
 
     print(f"{algo.__name__} successfully reversed all test linked lists!")
     return True
+
+# Binary search
     
 # Binary trees
 @dataclass
@@ -108,11 +110,11 @@ def list_to_tree(values: list[int|None]) -> TreeNode:
 
 def validate_search(algo: Callable) -> bool:
     assert not algo(None, 3), "Error: Empty tree"
-    assert algo(list_to_tree([1]), 1), "Error: 1-node tree containing value"
+    assert algo(TreeNode(1), 1), "Error: 1-node tree containing value"
     assert algo(list_to_tree([10, 5, 15, 3, 7, 12, 20]), 7), "Error: tree containing value"
     assert algo(list_to_tree([1, None, 3, None, None, None, 4]), 4), "Error: unbalanced tree containing value"
     
-    assert not algo(list_to_tree([1]), 2), "Error: 1-node tree not containing value"
+    assert not algo(TreeNode(1), 2), "Error: 1-node tree not containing value"
     assert not algo(list_to_tree([10, 5, 15, 3, 7, 12, 20]), 18), "Error: tree not containing value"
     assert not algo(list_to_tree([1, None, 3, None, None, None, 4]), 5), "Error: unbalanced tree not containing value"
 
@@ -120,10 +122,24 @@ def validate_search(algo: Callable) -> bool:
     return True
 
 def validate_insert(algo: Callable) -> bool:
-    assert algo(list_to_tree([None]), 1) == list_to_tree([1]), "Error: empty tree"
-    assert algo(list_to_tree([1]), 2) == list_to_tree([1, None, 2]), "Error: 1-node tree"
+    assert algo(None, 1) == TreeNode(1), "Error: empty tree"
+    assert algo(TreeNode(1), 2) == list_to_tree([1, None, 2]), "Error: 1-node tree"
     assert algo(list_to_tree([3, 1, 5]), 7) == list_to_tree([3, 1, 5, None, None, None, 7]), "Error: basic tree"
-    assert algo(list_to_tree([1, None, 3, None, None, None, 4]), 7) == list_to_tree([1, None, 3, None, None, None, 4, None, None, None, None, None, None, None, 7]), "Error: unbalanced tree"
+    assert algo(list_to_tree([1, None, 3, None, None, None, 4]), 7) ==\
+        list_to_tree([1, None, 3, None, None, None, 4, None, None, None, None, None, None, None, 7]), "Error: unbalanced tree"
+
+    print(f"{algo.__name__} successfully passed all test cases!")
+    return True
+
+def validate_remove(algo: Callable) -> bool:
+    assert algo(None, 42) == None, "Error: empty tree"
+    assert algo(TreeNode(42), 42) == None, "Error: 1-node tree with value"
+    assert algo(TreeNode(42), 0) == TreeNode(42), "Error: 1-node tree without value"
+    assert algo(list_to_tree([3, 1, 5]), 5) == list_to_tree([3, 1]), "Error: basic tree with value"
+    assert algo(list_to_tree([3, 1, 5]), 55) == list_to_tree([3, 1, 5]), "Error: basic tree without value"
+    assert algo(list_to_tree([1, None, 3, None, None, None, 4]), 4) == list_to_tree([1, None, 3]), "Error: unbalanced tree with value"
+    assert algo(list_to_tree([1, None, 3, None, None, None, 4]), 44) ==\
+        list_to_tree([1, None, 3, None, None, None, 4]), "Error: unbalanced tree with value"
 
     print(f"{algo.__name__} successfully passed all test cases!")
     return True

@@ -143,3 +143,25 @@ def validate_remove(algo: Callable) -> bool:
 
     print(f"{algo.__name__} successfully passed all test cases!")
     return True
+
+traversal_test_tree = list_to_tree([1, 2, 3, 4, 5, None, 7, None, None, 10, 11, None, None, 14])
+
+def validate_dfs_preorder(algo: Callable) -> bool:
+    assert algo(traversal_test_tree) == [1, 2, 4, 5, 10, 11, 3, 7, 14]
+    print(f"{algo.__name__} successfully passed the test case!")
+    return True
+
+def validate_dfs_inorder(algo: Callable) -> bool:
+    assert algo(traversal_test_tree) == [4, 2, 10, 5, 11, 1, 3, 14, 7]
+    print(f"{algo.__name__} successfully passed the test case!")
+    return True
+
+def validate_dfs_postorder(algo: Callable) -> bool:
+    assert algo(traversal_test_tree) == [4, 10, 11, 5, 2, 14, 7, 3, 1]
+    print(f"{algo.__name__} successfully passed the test case!")
+    return True
+
+def validate_bfs(algo: Callable) -> bool:
+    assert algo(traversal_test_tree) == [1, 2, 3, 4, 5, 7, 10, 11, 14]
+    print(f"{algo.__name__} successfully passed the test case!")
+    return True

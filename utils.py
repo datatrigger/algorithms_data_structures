@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import Callable
 from dataclasses import dataclass, field
 from collections import deque
+from numpy import array
 
 # Sorting
 def validate_sorting(input_algo: Callable) -> bool:
@@ -144,24 +145,51 @@ def validate_remove(algo: Callable) -> bool:
     print(f"{algo.__name__} successfully passed all test cases!")
     return True
 
-traversal_test_tree = list_to_tree([1, 2, 3, 4, 5, None, 7, None, None, 10, 11, None, None, 14])
+test_traversal_tree = list_to_tree([1, 2, 3, 4, 5, None, 7, None, None, 10, 11, None, None, 14])
 
 def validate_dfs_preorder(algo: Callable) -> bool:
-    assert algo(traversal_test_tree) == [1, 2, 4, 5, 10, 11, 3, 7, 14]
+    assert algo(test_traversal_tree) == [1, 2, 4, 5, 10, 11, 3, 7, 14]
     print(f"{algo.__name__} successfully passed the test case!")
     return True
 
 def validate_dfs_inorder(algo: Callable) -> bool:
-    assert algo(traversal_test_tree) == [4, 2, 10, 5, 11, 1, 3, 14, 7]
+    assert algo(test_traversal_tree) == [4, 2, 10, 5, 11, 1, 3, 14, 7]
     print(f"{algo.__name__} successfully passed the test case!")
     return True
 
 def validate_dfs_postorder(algo: Callable) -> bool:
-    assert algo(traversal_test_tree) == [4, 10, 11, 5, 2, 14, 7, 3, 1]
+    assert algo(test_traversal_tree) == [4, 10, 11, 5, 2, 14, 7, 3, 1]
     print(f"{algo.__name__} successfully passed the test case!")
     return True
 
 def validate_bfs(algo: Callable) -> bool:
-    assert algo(traversal_test_tree) == [1, 2, 3, 4, 5, 7, 10, 11, 14]
+    assert algo(test_traversal_tree) == [1, 2, 3, 4, 5, 7, 10, 11, 14]
+    print(f"{algo.__name__} successfully passed the test case!")
+    return True
+
+def validate_bfs_levels(algo: Callable) -> bool:
+    assert algo(test_traversal_tree) == {0: [1], 1: [2, 3], 2: [4, 5, 7], 3: [10, 11, 14]}
+    print(f"{algo.__name__} successfully passed the test case!")
+    return True
+
+# Graphs
+
+def validate_adjacency_list(algo: Callable) -> bool:
+    edges = [["A", "B"], ["B", "C"], ["B", "E"], ["C", "E"], ["E", "D"]]
+    adjacency_list = {'A': ['B'], 'B': ['C', 'E'], 'C': ['E'], 'E': ['D'], 'D': []}
+    assert algo(edges) == adjacency_list
+    print(f"{algo.__name__} successfully passed the test case!")
+    return True
+
+test_graph = array([[0]*4 for _ in range(4)])
+test_graph[1,0] = test_graph[1, 1] = test_graph[3, 1] = test_graph[2, 3] = 1
+
+def validate_dfs(algo: Callable) -> bool:
+    assert algo(test_graph) == 2
+    print(f"{algo.__name__} successfully passed the test case!")
+    return True
+
+def validate_bfs(algo: Callable) -> bool:
+    assert algo(test_graph) == 6
     print(f"{algo.__name__} successfully passed the test case!")
     return True

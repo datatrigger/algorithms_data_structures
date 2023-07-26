@@ -2,7 +2,6 @@ from __future__ import annotations
 from typing import Callable
 from dataclasses import dataclass, field
 from collections import deque
-from numpy import array
 
 # Sorting
 def validate_sorting(input_algo: Callable) -> bool:
@@ -64,6 +63,77 @@ def validate_reversing(algo: Callable) -> bool:
     return True
 
 # Binary search
+
+def validate_binary_search(algo: Callable) -> bool:
+    assert not algo([], 1), "Error: empty array"
+    assert not algo([1], 2), "Error: 1-element array"
+    assert not algo([1, 3, 7, 11, 14, 15, 16, 20], 2), "Error: random array"
+    assert not algo([1, 3, 7, 11, 14, 15, 16, 20], 0), "Error: random array"
+    assert not algo([1, 3, 7, 11, 14, 15, 16, 20], 21), "Error: random array"
+    
+    assert algo([1], 1), "Error: 1-element array"
+    assert algo([1, 3, 7, 11, 14, 15, 16, 20], 1), "Error: random array"
+    assert algo([1, 3, 7, 11, 14, 15, 16, 20], 16), "Error: random array"
+    assert algo([1, 3, 7, 11, 14, 15, 16, 20], 20), "Error: random array"
+
+    print(f"{algo.__name__} successfully passed all test cases!")
+    return True
+
+def validate_binary_search_duplicates(algo: Callable) -> bool:
+    assert algo([], 1) == (-1, -1), "Error: empty array"
+    assert algo([1], 1) == (0, 0), "Error: 1-element array"
+    assert algo([1], 2) == (-1, -1), "Error: 1-element array"
+    assert algo([1, 1 ,1], 1) == (0, 2), "Error: only duplicates"
+    assert algo([1, 1, 1], 2) == (-1, -1), "Error: only duplicates"
+    assert algo([0, 1, 2, 3, 4, 5], 2) == (2, 2), "Error: array without duplicates"
+    assert algo([0, 1, 2, 4, 5], 3) == (-1, -1), "Error: array without duplicates"
+    assert algo([0, 0, 1, 2, 2, 2, 3, 3, 5, 5, 5], 2) == (3, 5),"Error: array with duplicates"
+    assert algo([0, 0, 1, 2, 2, 2, 3, 3, 5, 5, 5], 4) == (-1, -1),"Error: array with duplicates"
+
+    print(f"{algo.__name__} successfully passed all test cases!")
+    return True
+
+def validate_bisect_left(algo: Callable) -> bool:
+    assert algo([], 1) == 0, "Error: empty array"
+    assert algo([1], 0) == 0, "Error: 1-element array"
+    assert algo([1], 1) == 0, "Error: 1-element array"
+    assert algo([1], 2) == 1, "Error: 1-element array"
+    assert algo([1, 3, 4], 0) == 0, "Error: array without duplicates"
+    assert algo([1, 3, 4], 1) == 0, "Error: array without duplicates"
+    assert algo([1, 3, 4], 2) == 1, "Error: array without duplicates"
+    assert algo([1, 3, 4], 3) == 1, "Error: array without duplicates"
+    assert algo([1, 3, 4], 5) == 3, "Error: array without duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 0) == 0, "Error: array with duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 1) == 0, "Error: array with duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 2) == 1, "Error: array with duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 4) == 2, "Error: array with duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 6) == 5, "Error: array with duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 7) == 5, "Error: array with duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 10) == 6, "Error: array with duplicates"
+
+    print(f"{algo.__name__} successfully passed all test cases!")
+    return True
+
+def validate_bisect_right(algo: Callable) -> bool:
+    assert algo([], 1) == 0, "Error: empty array"
+    assert algo([1], 0) == 0, "Error: 1-element array"
+    assert algo([1], 1) == 1, "Error: 1-element array"
+    assert algo([1], 2) == 1, "Error: 1-element array"
+    assert algo([1, 3, 4], 0) == 0, "Error: array without duplicates"
+    assert algo([1, 3, 4], 1) == 1, "Error: array without duplicates"
+    assert algo([1, 3, 4], 2) == 1, "Error: array without duplicates"
+    assert algo([1, 3, 4], 3) == 2, "Error: array without duplicates"
+    assert algo([1, 3, 4], 5) == 3, "Error: array without duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 0) == 0, "Error: array with duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 1) == 1, "Error: array with duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 2) == 1, "Error: array with duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 4) == 5, "Error: array with duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 6) == 5, "Error: array with duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 7) == 6, "Error: array with duplicates"
+    assert algo([1, 3, 4, 4, 4, 7], 10) == 6, "Error: array with duplicates"
+
+    print(f"{algo.__name__} successfully passed all test cases!")
+    return True
     
 # Binary trees
 @dataclass
@@ -181,8 +251,8 @@ def validate_adjacency_list(algo: Callable) -> bool:
     print(f"{algo.__name__} successfully passed the test case!")
     return True
 
-test_graph = array([[0]*4 for _ in range(4)])
-test_graph[1,0] = test_graph[1, 1] = test_graph[3, 1] = test_graph[2, 3] = 1
+test_graph = [[0]*4 for _ in range(4)]
+test_graph[1][0] = test_graph[1][1] = test_graph[3][1] = test_graph[2][3] = 1
 
 def validate_dfs(algo: Callable) -> bool:
     assert algo(test_graph) == 2

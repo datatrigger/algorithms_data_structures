@@ -244,12 +244,7 @@ def validate_bfs_levels(algo: Callable) -> bool:
 
 # Graphs
 
-def validate_adjacency_list(algo: Callable) -> bool:
-    edges = [["A", "B"], ["B", "C"], ["B", "E"], ["C", "E"], ["E", "D"]]
-    adjacency_list = {'A': ['B'], 'B': ['C', 'E'], 'C': ['E'], 'E': ['D'], 'D': []}
-    assert algo(edges) == adjacency_list
-    print(f"{algo.__name__} successfully passed the test case!")
-    return True
+## Grids
 
 test_graph = [[0]*4 for _ in range(4)]
 test_graph[1][0] = test_graph[1][1] = test_graph[3][1] = test_graph[2][3] = 1
@@ -261,5 +256,26 @@ def validate_dfs(algo: Callable) -> bool:
 
 def validate_bfs(algo: Callable) -> bool:
     assert algo(test_graph) == 6
+    print(f"{algo.__name__} successfully passed the test case!")
+    return True
+
+## Adjacency lists
+
+def validate_adjacency_list(algo: Callable) -> bool:
+    edges = [["A", "B"], ["B", "C"], ["B", "E"], ["C", "E"], ["E", "D"]]
+    adjacency_list = {'A': ['B'], 'B': ['C', 'E'], 'C': ['E'], 'E': ['D'], 'D': []}
+    assert algo(edges) == adjacency_list
+    print(f"{algo.__name__} successfully passed the test case!")
+    return True
+
+adj = {'A': ['B'], 'B': ['C', 'E'], 'C': ['E'], 'E': ['D'], 'D': []}
+
+def validate_dfs_adj(algo: Callable) -> bool:
+    assert algo(adj, "A", "E") == 2
+    print(f"{algo.__name__} successfully passed the test case!")
+    return True
+
+def validate_bfs_adj(algo: Callable) -> bool:
+    assert algo(adj, "A", "E") == 2
     print(f"{algo.__name__} successfully passed the test case!")
     return True

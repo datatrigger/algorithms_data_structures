@@ -19,3 +19,28 @@ x, y = [2], [5]
 print(f"lattice({x}, {y})) = {lattice(x, y)}")
 x, y = [0, 0, 1], [1]
 print(f"lattice({x}, {y}) = {lattice(x, y)}")
+
+
+def peasant_iter(x: int, y: int) -> int:
+    prod = 0
+    while x > 0:
+        prod += y if x % 2 else 0
+        x, y = x // 2, 2 * y
+    return prod
+
+print(peasant_iter(13, 2))
+
+def peasant_rec(x: int, y: int) -> int:
+    if x == 0:
+        return 0
+    
+    if x % 2 == 0:
+        return peasant_rec(x // 2, 2 * y)
+    else:
+        return y + peasant_rec(x // 2, 2 * y)
+
+print(peasant_iter(1, 0))
+print(peasant_iter(0, 1))
+print(peasant_iter(0, 0))
+print(peasant_iter(13, 2))
+print(peasant_iter(23, 3))

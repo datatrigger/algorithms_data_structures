@@ -62,3 +62,22 @@ def exp_rec(a, n):
     return res if n % 2 == 0 else res * a
 
 print(exp_rec(2, 5)) 
+
+#p. 77
+def subset_sum(nums: list[int], target: int) -> bool:
+    """Returns True if `nums` contains a subset of elements adding up to `target`"""
+    
+    if target == 0:
+        return True
+    if target < 0 or len(nums) == 0: # actually 2nd condition: empty nums AND target != 0
+        # But that would be redundant with 1st base case
+        return False
+    
+    x = nums.pop()
+    return (
+        subset_sum(nums, target - x)
+        or
+        subset_sum(nums, target)
+    )
+
+print(subset_sum([1, 2, 0, 2, 3], 5))

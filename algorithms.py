@@ -44,3 +44,21 @@ print(peasant_iter(0, 1))
 print(peasant_iter(0, 0))
 print(peasant_iter(13, 2))
 print(peasant_iter(23, 3))
+
+# p. 42
+
+def exp_iter(a, n):
+    res = a
+    for i in range(n -1):
+        res *= a
+    return res
+
+print(exp_iter(2, 3))
+
+def exp_rec(a, n):
+    if n == 1:
+        return a
+    res = exp_rec(a, n // 2) * exp_rec(a, n // 2)
+    return res if n % 2 == 0 else res * a
+
+print(exp_rec(2, 5)) 

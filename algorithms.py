@@ -65,7 +65,7 @@ print(exp_rec(2, 5))
 
 #p. 77
 def subset_sum(nums: list[int], target: int) -> bool:
-    """Returns True if `nums` contains a subset of elements adding up to `target`"""
+    """Returns True if list of positive integers `nums` contains a subset of elements adding up to `target`"""
     
     if target == 0:
         return True
@@ -81,3 +81,32 @@ def subset_sum(nums: list[int], target: int) -> bool:
     )
 
 print(subset_sum([1, 2, 0, 2, 3], 5))
+
+# Recall this algorithm to build subsets
+def build_subsets(nums):
+    subsets = [[]]
+    for num in nums:
+      subsets += [subset + [num] for subset in subsets]
+    return subsets
+
+print(build_subsets([1, 2, 3]))
+
+def subset_sum_iter(nums: list[int], target: int) -> bool:
+    """Returns True if list of positive integers `nums` contains a subset of elements adding up to `target`"""
+    
+    if target == 0:
+        return True
+    if target < 0 or len(nums) == 0:
+        return False
+    
+    sums = [0]
+    for number in nums:
+        for curr_sum in tuple(sums):
+            new_sum = curr_sum + number
+            if new_sum == target:
+                return True
+            sums.append(new_sum)
+    return False
+
+print(subset_sum_iter([1, 2, 0, 2, 3], 5))
+print(subset_sum_iter([1, 2, 0, 2, 3], 10))

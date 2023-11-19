@@ -66,30 +66,43 @@ print(exp_rec(2, 5))
 #p. 77
 def subset_sum(nums: list[int], target: int) -> bool:
     """Returns True if list of positive integers `nums` contains a subset of elements adding up to `target`"""
-    
     if target == 0:
         return True
     if target < 0 or len(nums) == 0: # actually 2nd condition: empty nums AND target != 0
         # But that would be redundant with 1st base case
         return False
     
-    x = nums.pop()
+    x = nums[-1]
     return (
-        subset_sum(nums, target - x)
+        subset_sum(nums[:-1], target - x)
         or
-        subset_sum(nums, target)
+        subset_sum(nums[:-1], target)
     )
 
-print(subset_sum([1, 2, 0, 2, 3], 5))
+print(f"Subset sum: {subset_sum([3, 1, 10, 2, 3], 7)}")
 
+# Avoid copies of input array nums:
+def subset_sum_idx(nums, i, target):
+    if target == 0:
+        return True
+    if target < 0 or i < 0:
+        return False
+    return (
+        subset_sum_idx(nums, i - 1, target - nums[i])
+        or
+        subset_sum_idx(nums, i - 1, target)
+    )
+
+nums = [3, 1, 10, 2, 3]
+print(f"Subset sum with indexes: {subset_sum_idx(nums, len(nums) - 1, 7)}")
+      
+# Can this algorithm be written iteratively?
 # Recall this algorithm to build subsets
 def build_subsets(nums):
     subsets = [[]]
     for num in nums:
       subsets += [subset + [num] for subset in subsets]
     return subsets
-
-print(build_subsets([1, 2, 3]))
 
 def subset_sum_iter(nums: list[int], target: int) -> bool:
     """Returns True if list of positive integers `nums` contains a subset of elements adding up to `target`"""
@@ -108,5 +121,44 @@ def subset_sum_iter(nums: list[int], target: int) -> bool:
             sums.append(new_sum)
     return False
 
-print(subset_sum_iter([1, 2, 0, 2, 3], 5))
-print(subset_sum_iter([1, 2, 0, 2, 3], 10))
+print("Subset sum iterative: ",
+    subset_sum_iter([3, 1, 10, 2, 3], 7),
+    subset_sum_iter([1, 2, 0, 2, 3], 5),
+    subset_sum_iter([1, 2, 0, 2, 3], 10),
+    subset_sum_iter([1, 2, 3], 6)
+)
+
+#p. 79
+
+# Adapt the boolean function to actually build a subset;
+def subset_sum_2(nums :list[int], i:int, target: int) -> list[int]|None:
+    if target == 0:
+        return []
+    if target < 0 or i < 0:
+        return
+
+    subset_without = subset_sum_2(nums, i - 1, target)
+    subset_with = subset_sum_2(nums, i - 1, target - nums[i])
+    return subset_with + [nums[i]] if subset_with is not None else subset_without
+
+nums = [3, 1, 10, 2, 3]
+print(f"ss2: {subset_sum_2(nums, len(nums) - 1, 7)}")
+
+# Return all subsets with sum target
+def subsets_sum(i, subset, target):
+    if target == 0:
+        subsets.append(subset[:])
+        return
+    if target < 0 or i < 0:
+        return
+    subsets_sum(i - 1, subset, target)
+    subset.append(nums[i])
+    subsets_sum(i - 1, subset, target - nums[i])
+    subset.pop()
+    return
+
+
+nums = [3, 1, 10, 2, 3, 5]
+subsets = []
+subsets_sum(len(nums) - 1, [], 7)
+print(f"All subsets: {subsets}")

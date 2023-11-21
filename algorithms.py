@@ -162,3 +162,17 @@ nums = [3, 1, 10, 2, 3, 5]
 subsets = []
 subsets_sum(len(nums) - 1, [], 7)
 print(f"All subsets: {subsets}")
+
+#p. 80
+def is_splittable(s:str) -> bool:
+    '''Returns True if string `s` can be split in words'''
+    if not s:
+        return True
+    for i in range(1, len(s) + 1):
+        curr = s[:i]
+        if curr in words and is_splittable(s[i:]):
+            return True
+    return False
+
+words = set(["both", "earth", "and", "saturn", "spin", "bot", "heart", "hands", "at", "urns", "pin"])
+print(is_splittable("bothearthandsaturnspin"))

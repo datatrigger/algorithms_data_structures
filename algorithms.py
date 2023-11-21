@@ -164,15 +164,34 @@ subsets_sum(len(nums) - 1, [], 7)
 print(f"All subsets: {subsets}")
 
 #p. 80
-def is_splittable(s:str) -> bool:
+def is_splittable(s: str) -> bool:
     '''Returns True if string `s` can be split in words'''
     if not s:
         return True
     for i in range(1, len(s) + 1):
-        curr = s[:i]
-        if curr in words and is_splittable(s[i:]):
+        if s[:i] in words and is_splittable(s[i:]):
             return True
     return False
 
 words = set(["both", "earth", "and", "saturn", "spin", "bot", "heart", "hands", "at", "urns", "pin"])
-print(is_splittable("bothearthandsaturnspin"))
+print(f"""'bothearthandsaturnspin' is splittable: {is_splittable('bothearthandsaturnspin')}""")
+
+# Indexed version
+# Not useful in Python because slicing immutables creates copies
+# https://stackoverflow.com/questions/64871329/does-string-slicing-perform-copy-in-memory
+s = "bothearthandsaturnspin"
+def is_splittable_idx(i: int) -> bool:
+    '''Returns True if string `s` can be split in words'''
+    if i == len(s):
+        return True
+    for j in range(i + 1, len(s) + 1):
+        if s[i:j] in words and is_splittable_idx(j):
+            return True
+    return False
+
+print(f"""'bothearthandsaturnspin' is splittable (index): {is_splittable_idx(0)}""")
+
+def splittable(i :int) -> bool:
+    return True if i == len(s) else any([s[i:j] in words and splittable(j) for j in range(i + 1, len(s) + 1)])
+
+print(f"""'bothearthandsaturnspin' is splittable (condensed): {splittable(0)}""")

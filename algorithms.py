@@ -198,14 +198,32 @@ print(f"""'bothearthandsaturnspin' is splittable (condensed): {splittable(0)}"""
 
 
 # p. 88
-def lis(prev_idx: int, curr_idx: int) -> int:
-  if curr_idx == len(nums):
-    return 0
-  
-  skip = lis(prev_idx, curr_idx + 1)
-  prev_num = nums[prev_idx] if prev_idx >= 0 else float("-inf")
-  take =  1 + lis(curr_idx, curr_idx + 1) if prev_num < nums[curr_idx] else skip
-  return max(skip, take)
 
-nums = [7, 2, 4, 1, 3, 6, 8]
-print(lis(prev_idx=-1, curr_idx=0))
+# Subset sum - like recursive pattern: taking/not taking element at index i 
+def lis(prev: int, curr: int) -> int:
+    if curr == len(nums):
+      return 0
+  
+    skip = lis(prev, curr + 1)
+    prev_num = nums[prev] if prev >= 0 else float("-inf")
+    take =  1 + lis(curr, curr + 1) if prev_num < nums[curr] else skip
+    return max(skip, take)
+
+nums = [7, 2, 4, 1, 3, 6, 5]
+print(lis(prev=-1, curr=0))
+
+# p. 90
+
+# Alternative recursive pattern:
+# Recurse on all potential next element of the subsequence 
+def lis2(curr: int) -> int:
+    curr_num = nums[curr] if curr >= 0 else float("-inf")
+    
+    best_length = 0
+    for i in range(curr + 1, len(nums)):
+        if nums[i] > curr_num:
+            best_length = max(best_length, lis2(i))
+    return 1 + best_length if curr >= 0 else best_length # do not count -inf at index -1
+
+nums = [7, 2, 4, 1, 3, 6, 5]
+print(lis2(curr=-1))

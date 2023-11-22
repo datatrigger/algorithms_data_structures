@@ -195,3 +195,17 @@ def splittable(i :int) -> bool:
     return True if i == len(s) else any([s[i:j] in words and splittable(j) for j in range(i + 1, len(s) + 1)])
 
 print(f"""'bothearthandsaturnspin' is splittable (condensed): {splittable(0)}""")
+
+
+# p. 88
+def lis(prev_idx: int, curr_idx: int) -> int:
+  if curr_idx == len(nums):
+    return 0
+  
+  skip = lis(prev_idx, curr_idx + 1)
+  prev_num = nums[prev_idx] if prev_idx >= 0 else float("-inf")
+  take =  1 + lis(curr_idx, curr_idx + 1) if prev_num < nums[curr_idx] else skip
+  return max(skip, take)
+
+nums = [7, 2, 4, 1, 5, 6, 8]
+print(lis(prev_idx=-1, curr_idx=0))

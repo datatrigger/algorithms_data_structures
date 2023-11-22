@@ -207,5 +207,5 @@ def lis(prev_idx: int, curr_idx: int) -> int:
   take =  1 + lis(curr_idx, curr_idx + 1) if prev_num < nums[curr_idx] else skip
   return max(skip, take)
 
-nums = [7, 2, 4, 1, 5, 6, 8]
+nums = [7, 2, 4, 1, 3, 6, 8]
 print(lis(prev_idx=-1, curr_idx=0))

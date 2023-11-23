@@ -12,8 +12,8 @@ DP problems often solve these kinds of problems:
 
 ### Pattern
 
-* Recursive formulation: solution = f(sub_solutions)
-  * Problem specification
-  * Recursive solution
+* Recursive formulation - solution = f(sub_solutions)
+  * Problem specification: Define objective function
+  * Recursive solution: bases cases + induction
 
 * Bottom-up solution (base-cases -> input)

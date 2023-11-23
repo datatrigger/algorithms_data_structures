@@ -1,3 +1,5 @@
+### Recursion
+
 # p. 4
 def lattice(x: list[int], y: list[int]) -> list[int]:
     n, m = len(x), len(y)
@@ -62,6 +64,8 @@ def exp_rec(a, n):
     return res if n % 2 == 0 else res * a
 
 print(exp_rec(2, 5)) 
+
+### Backtracking
 
 #p. 77
 def subset_sum(nums: list[int], target: int) -> bool:
@@ -198,7 +202,6 @@ print(f"""'bothearthandsaturnspin' is splittable (condensed): {splittable(0)}"""
 
 
 # p. 88
-
 # Subset sum - like recursive pattern: taking/not taking element at index i 
 def lis(prev: int, curr: int) -> int:
     if curr == len(nums):
@@ -213,7 +216,6 @@ nums = [7, 2, 4, 1, 3, 6, 5]
 print(lis(prev=-1, curr=0))
 
 # p. 90
-
 # Alternative recursive pattern:
 # Recurse on all potential next element of the subsequence 
 def lis2(curr: int) -> int:
@@ -227,3 +229,38 @@ def lis2(curr: int) -> int:
 
 nums = [7, 2, 4, 1, 3, 6, 5]
 print(lis2(curr=-1))
+
+### Dynamic Programming
+
+# p. 105
+
+s = "bothearthandsaturnspin"
+cache = {}
+def is_splittable_memoized(i: int) -> bool:
+    '''Returns True if string `s` can be split in words'''
+    if i == len(s):
+        return True
+    
+    for j in range(i + 1, len(s) + 1):
+        if j not in cache:
+            cache[j] = is_splittable_memoized(j)
+        if s[i:j] in words and cache[j]:
+            return True
+    return False
+
+print(f"""'bothearthandsaturnspin' is splittable (memoized): {is_splittable_memoized(0)}""")
+
+# Notice that each subproblem is_splittable(i) depends only on is_splittable(j), j > i
+# So fill the cache in reverse order:
+
+
+def is_splittable_dp(s: str, words: set[str]):
+    n = len(s)
+    splittables = [False] * len(s) + [True]
+    for i in range(n - 1, -1, -1):
+        for j in range(i, n + 1):
+            if s[i:j] in words and splittables[j]:
+                splittables[i] = True
+    return splittables[0]
+
+print(f"""'bothearthandsaturnspin' is splittable (DP): {is_splittable_dp(s, words)}""")

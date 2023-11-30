@@ -264,3 +264,21 @@ def is_splittable_dp(s: str, words: set[str]):
     return splittables[0]
 
 print(f"""'bothearthandsaturnspin' is splittable (DP): {is_splittable_dp(s, words)}""")
+
+# p. 110
+def lis_dp1(nums):
+  nums = [float("-inf")] + nums
+  n = len(nums)
+  array = [([None] * n) + [0] for i in range(n + 1)]
+
+  for j in range(n - 1, 0, -1):
+     for i in range(j):
+        if nums[i] >= nums[j]:
+           array[i][j] = array[i][j + 1]
+        else:
+           array[i][j] = max(array[i][j + 1], 1 + array[j][j + 1])
+  print(array)
+  return array[0][1]
+
+nums = [7, 2, 4, 1, 3, 6, 5]
+print(lis_dp1(nums))

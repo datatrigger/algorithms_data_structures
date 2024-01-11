@@ -249,6 +249,11 @@ def validate_bfs_levels(algo: Callable) -> bool:
 test_graph = [[0]*4 for _ in range(4)]
 test_graph[1][0] = test_graph[1][1] = test_graph[3][1] = test_graph[2][3] = 1
 
+# o o o o
+# 1 1 o o
+# o 1 1 o
+# o o o o
+
 def validate_dfs(algo: Callable) -> bool:
     assert algo(test_graph) == 2
     print(f"{algo.__name__} successfully passed the test case!")

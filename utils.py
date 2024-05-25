@@ -232,7 +232,7 @@ def validate_dfs_postorder(algo: Callable) -> bool:
     print(f"{algo.__name__} successfully passed the test case!")
     return True
 
-def validate_bfs(algo: Callable) -> bool:
+def validate_bfs_tree(algo: Callable) -> bool:
     assert algo(test_traversal_tree) == [1, 2, 3, 4, 5, 7, 10, 11, 14]
     print(f"{algo.__name__} successfully passed the test case!")
     return True

@@ -31,9 +31,11 @@ It is now clear why Dijkstra's algorithm is suited here. However, there are stil
 
 A naïve solution would be to run Dijkstra until all shortest paths to $(K_i, \, 1_n), \, 1 \leq i \leq n$ have been found (with potentially some shortest paths left to $+\infty$ if some nodes $(K_i, \, 1_n)$ are not reachable). Then just take the minimum of these values and there is your solution.
 
-But we can take advantage of this key-property: *Dijkstra's algorithm outputs shortest paths from the source in nondecreasing order*. As a consequence, the first time the algorithm processes any node $(K_i, 1_n), 1 \leq i \leq n$, then it is guaranteed to be less or equal than all other shortest paths to $\{(K_j, 1_n) \, | \, 1 \leq j \leq n,  \, j \neq i \}$. In other words, it is the minimum we are looking for.
+But we can take advantage of this key-property: *Dijkstra's algorithm outputs shortest paths from the source in nondecreasing order* (see the proof below). As a consequence, the first time the algorithm processes any node $(K_i, 1_n), 1 \leq i \leq n$, then it is guaranteed to be less or equal than all other shortest paths to $\{(K_j, 1_n) \, | \, 1 \leq j \leq n,  \, j \neq i \}$. In other words, it is the minimum we are looking for.
 
-*Proof*
+#### Proof
+
+Let’s proceed with a proof by contradiction by assuming that the sequence of shortest path distances determined by Dijkstra’s algorithm is not nondecreasing. This implies that at some point in the algorithm, an unvisited node $u$ is popped from the priority queue, and its shortest path distance $d_u$ is less than the shortest path distance $d_v$ of a previously visited node $v$.
 
 ### 2) On-the-fly expansion
 

@@ -137,3 +137,23 @@ class Solution:
                         heapq.heappush(heap, (d + dToNei, nei, state))
         return -1
 ```
+
+# Time Complexity
+
+*Please let me know if the analysis below seems incorrect*
+
+$k$ denotes the number of keys. There are $2 \cdot k + 1$ points of interest.
+
+* To get the coordinates of all points of interest, we iterate on each cell of the grid and store the result: $O(n \cdot m)$ time complexity and $O(k)$ space complexity
+* Build adjacency list: 1 BFS per key i.e $O(k \cdot n \cdot m)$ where $k$ is the number of keys (time and space)
+* Dijkstra: there are $2 \cdot k + 1$ points of interests and $2^{k} - 1$ possible states, so potentially $O(k \cdot 2^{k})$ nodes. Then, an upper bound of the number of edges is $O(k^2 \cdot 4^{k})$. In practice, there will be fewer edges since lock nodes are not reachable from any state. The time complexitiy of Dijkstra'algorithm is $O(E \cdot log(E))$ and the space complexity is $O(E)$ where $E$ is the actual number of edges.
+
+To sum up, below are rough upper bounds:
+
+* Time complexity: $O(k \cdot n \cdot m + k^2 \cdot 4^{k} \cdot log(k^2 \cdot 4^{k}))$
+* Space complexity: $O(k \cdot n \cdot m + k^2 \cdot 4^{k})$
+
+In practice, the algorithm remains efficient in the particular context of this problem:
+* Small number of keys: $k \leq 6$
+* Early stopping (see above)
+* On-the-fly expansion (see above)

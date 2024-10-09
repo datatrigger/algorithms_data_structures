@@ -1,6 +1,6 @@
 # Correctness of approach 2 (Dijkstra)
 
-TL;DR
+## TL;DR
 
 The problem is represented as a weighted directed graph where each node corresponds to a *point of interest* (start position, key, lock) and a *state* (set of keys already collected). With (start node, 0 key) as the source node, consider $S$, the set of lengths of the shortest path**s** to the nodes with all keys. Then the question is about finding the minimum of *S*. Since Dijkstra finds shortest paths in nondecreasing order, then the "first time" it finds the shortest path to any node with all keys, it will necessarily be the minimum of S.
 
@@ -44,19 +44,15 @@ In this case, vertex $u$ was either discovered or its tentative distance was upd
 
 $$d_u = d_v + w_{vu}$$
 
-Since edge weights in Dijkstra's algorithm are assumed to be non-negative (i.e., $w_{vu} \geq 0$), we have:
+Since edge weights are non-negative:
 
 $$d_u = d_v + w_{vu} \geq d_v$$
 
-Thus, $d_u \geq d_v$ holds in this case.
+Hence $d_u \geq d_v$ holds in this case.
 
 ##### Case 2: $u$ was already in the priority queue before processing $v$
 
-In this case, vertex $u$ was in the priority queue with some tentative distance $d_u$ prior to processing $v$. Since Dijkstra’s algorithm processes vertices in order of increasing distance from the source, and $v$ was processed before $u$, it must be that:
-
-$$d_v \leq d_u$$
-
-Otherwise, $u$ would have been popped from the priority queue before $v$, contradicting the fact that $v$ was processed first. Therefore, in this case as well, $d_u \geq d_v$.
+In this case, vertex $u$ was in the priority queue with some tentative distance $d_u$ prior to processing $v$. Then it must be that $d_v \leq d_u$, otherwise $u$ would have been popped from the priority queue before $v$, contradicting the fact that $v$ was processed first. Therefore, in this case as well, $d_u \geq d_v$.
 
 ##### Conclusion:
 
@@ -70,3 +66,74 @@ According to the previous section, we do not need to determine the shortest path
 
 # Code
 
+```python
+class Solution:
+    DELTAS = ((-1, 0), (1, 0), (0, -1), (0, 1))
+
+    def getAdjacentPoints(self, point: str, coord: tuple[int, int], grid: list[str]) -> list[list[str, int]]:
+        """
+        For a given point of interest `point` and its coordinates on the grid `coord`,
+        determine adjacent points of interest and shortest distance using BFS.
+        """
+        R, C = len(grid), len(grid[0])
+        queue = deque([coord])
+        visited = {coord}
+        adjcacentPoints = []
+        d = -1
+        while queue:
+            d += 1
+            for _ in range(len(queue)):
+                r, c = queue.popleft()
+                val = grid[r][c]
+                if val not in {point, ".", "#"}:
+                    adjcacentPoints.append([val, d])
+                    continue
+                for dr, dc in self.DELTAS:
+                    neiR, neiC = r + dr, c + dc
+                    isValid = (
+                        0 <= neiR < R
+                        and 0 <= neiC < C
+                        and grid[neiR][neiC] != "#"
+                        and (neiR, neiC) not in visited
+                    )
+                    if isValid:
+                        queue.append((neiR, neiC))
+                        visited.add((neiR, neiC))
+        return adjcacentPoints
+
+    def shortestPathAllKeys(self, grid: List[str]) -> int:
+        # Get coordinates of all points of interest
+        R, C = len(grid), len(grid[0])
+        PointsCoord = {
+            grid[r][c]: (r, c)
+            for r in range(R)
+            for c in range(C)
+            if grid[r][c] not in '.#'
+        }
+
+        # Build adjacency list (only distance, no state at this point)
+        adj = {point: self.getAdjacentPoints(point, coord, grid) for (point, coord) in PointsCoord.items()}
+
+        # Dijkstra
+        targetState = 2 ** sum(point.islower() for point in PointsCoord if point != "@") - 1
+        heap = [(0, '@', 0)] # (distance, point of interest, state)
+        visited = set()
+        while heap:
+            d, point, state = heapq.heappop(heap)
+            if state == targetState:
+                return d
+            if (point, state) in visited:
+                continue
+            visited.add((point, state))
+            for nei, dToNei in adj[point]:
+                if nei == "@":
+                    heapq.heappush(heap, (d + dToNei, nei, state))
+                elif nei.islower():
+                    nKey = ord(nei) - ord("a")
+                    heapq.heappush(heap, (d + dToNei, nei, state | (1 << nKey)))
+                else:
+                    nLock = ord(nei) - ord("A")
+                    if state & (1 << nLock): # Can open lock with corresponding key
+                        heapq.heappush(heap, (d + dToNei, nei, state))
+        return -1
+```

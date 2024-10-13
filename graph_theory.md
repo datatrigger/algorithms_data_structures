@@ -29,7 +29,7 @@ A tree is:
 
 Conversely, a tree necessarily has $|V - 1|$ edges.
 
-*Intuition*
+### Intuition
 
 For 1). To build any connected graph, each vertex must come with at least 1 edge to connect itself to the existing graph, except for the first one. E.g.: 1, 2-, 3--, 4-
 
@@ -51,4 +51,6 @@ For 1). To build any connected graph, each vertex must come with at least 1 edge
  \ 3 /
 </pre>
 
-For 2).
+That is at least |V| - 1 edges.
+
+For 2). Let $G$ be an undirected graph with size $|V|$. The connected components of $G$ are denoted $G_i \,, 1 \leq i \leq C$. There must be a connected component $G_j$ such that the size of $G_j$ is at least its order. Otherwise $|E| = |E_1| + ... + |E_C| \leq |V_1| - 1 + ... + |V_C| - 1 = |V| - C < |V|$, contradiction. $G_j$ is connected with $|E_j| > |V_j| - 1$ edges. But it could be connected with only $|V_j| - 1$ edges as per point 1). Then an "unnecessary" edge must form a cycle in subgraph $G_j$.

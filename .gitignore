@@ -3,3 +3,4 @@ sandbox.ipynb
 sandbox*.py
 __pycache__
 tmp.py
+*.txt

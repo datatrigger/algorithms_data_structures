@@ -5,37 +5,6 @@ with open("input.txt", "r") as f:
 # 1
 def is_safe(report):
     if len(report) == 0:
-        return 0
-    
-    if report[1] - report[0] > 0:
-        trend = 1
-        prev = report[0] - 1
-    elif report[1] - report[0] < 0:
-        trend = -1
-        prev = report[0] + 1
-    else:
-        return 0
-    
-    for num in report:
-        safe =(
-            trend * (num - prev) > 0
-            and 1 <= abs(num - prev) <= 3
-        )
-        if not safe:
-            return 0
-        prev = num
-    return 1
-
-count_safe = 0
-for line in lines:
-    nums = list(map(int, line.split()))
-    count_safe += is_safe(nums)
-
-print(count_safe)
-
-# 2
-def is_safe(report):
-    if len(report) == 0:
         return False
     
     if report[1] - report[0] > 0:
@@ -57,6 +26,14 @@ def is_safe(report):
         prev = num
     return True
 
+count_safe = 0
+for line in lines:
+    nums = list(map(int, line.split()))
+    count_safe += int(is_safe(nums))
+
+print(count_safe)
+
+# 2
 count_safe = 0
 for line in lines:
     nums = list(map(int, line.split()))

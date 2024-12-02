@@ -37,7 +37,7 @@ print(count_safe)
 count_safe = 0
 for line in lines:
     nums = list(map(int, line.split()))
-    if is_safe(nums) or any([is_safe(nums[:i] + nums[i + 1:]) for i in range(len(nums))]):
+    if any([is_safe(nums[:i] + nums[i + 1:]) for i in range(len(nums) + 1)]):
         count_safe += 1
 
 print(count_safe)

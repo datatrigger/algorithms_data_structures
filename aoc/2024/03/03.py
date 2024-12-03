@@ -5,13 +5,10 @@ input = "".join(lines)
 
 # 1
 import re
-def mul(match):
-    nums = match[4:-1].split(",")
-    return int(nums[0]) * int(nums[1])
-
-matches = re.findall("mul\(\d+,\d+\)", input)
-res1 = sum(mul(match) for match in matches)
-print(res1)
+def s1(input):
+    matches = re.findall("mul\((\d+),(\d+)\)", input)
+    return sum(int(match[0]) * int(match[1]) for match in matches)
+print(s1(input))
 
 # 2
 #input = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
@@ -24,7 +21,4 @@ for i in range(len(input)):
         do = False
     if do:
         do_str += input[i]
-
-matches = re.findall("mul\(\d+,\d+\)", do_str)
-res2 = sum(mul(match) for match in matches)
-print(res2)
+print(s1(do_str))

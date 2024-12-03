@@ -1,6 +1,5 @@
 with open("input.txt", "r") as f:
-#with open("sample.txt", "r") as f:
-    lines = list((line.strip() for line in f.readlines()))
+    lines = sum(line.strip() for line in f.readlines()))
 
 # 1
 def is_safe(report):

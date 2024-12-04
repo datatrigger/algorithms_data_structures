@@ -33,5 +33,5 @@ def is_xmas(r, c):
         return xmas
     return False
 
-res2 = sum(int(is_xmas(r, c)) for r in range(R) for c in range(C))
+res2 = sum(is_xmas(r, c) for r in range(R) for c in range(C))
 print(res2)

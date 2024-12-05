@@ -3,12 +3,12 @@ from collections import defaultdict
 with open("input.txt", "r") as f:
     lines = (line.strip() for line in f.readlines())
 
-curr_predecessors = defaultdict(set)
+page_successors = defaultdict(set)
 for line in lines:
     if line == "":
         break
     curr, prev = line.split("|")
-    curr_predecessors[int(curr)].add(int(prev))
+    page_successors[int(curr)].add(int(prev))
 
 updates = []
 for line in lines:
@@ -16,11 +16,11 @@ for line in lines:
 
 # 1
 def is_ordered(update):
-    curr = set()
+    curr_update = set()
     for num in update:
-        if curr_predecessors[num] & curr:
+        if page_successors[num] & curr_update:
             return False
-        curr.add(num)
+        curr_update.add(num)
     return True
 
 res1 = sum(update[len(update) // 2] for update in updates if is_ordered(update))
@@ -28,14 +28,14 @@ print(res1)
 
 # 2
 def order(update):
-    update_ordered = []
+    new_update = []
     for num in update:
-        update_ordered.append(num)
-        i = len(update_ordered) - 2
-        while i >= 0 and not is_ordered(update_ordered):
-            update_ordered[i], update_ordered[i + 1] = update_ordered[i + 1], update_ordered[i]
+        new_update.append(num)
+        i = len(new_update) - 2
+        while i >= 0 and not is_ordered(new_update):
+            new_update[i], new_update[i + 1] = new_update[i + 1], new_update[i]
             i -= 1
-    return update_ordered
+    return new_update
 
 res2 = sum(order(update)[len(update) // 2] for update in updates if not is_ordered(update))
 print(res2)

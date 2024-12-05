@@ -39,3 +39,14 @@ def order(update):
 
 res2 = sum(order(update)[len(update) // 2] for update in updates if not is_ordered(update))
 print(res2)
+
+from functools import cmp_to_key
+def compare(page1, page2):
+    if page2 in page_successors[page1]:
+        return 1
+    elif page1 in page_successors[page2]:
+        return -1
+    else:
+        return 0
+res3 = sum(sorted(update, key=cmp_to_key(compare))[len(update) // 2] for update in updates if not is_ordered(update))
+print(res3)

@@ -8,6 +8,8 @@ def is_valid(line, part=1):
 
     cache = {}
     def f(i, curr):
+        if curr > val:
+            return False
         if i == len(nums):
             return curr == val
         if (i, curr) not in cache:

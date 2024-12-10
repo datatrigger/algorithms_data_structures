@@ -30,12 +30,14 @@ def dfs(r, c, prev, visited):
 res1 = sum(dfs(r, c, -1, set()) for r in range(R) for c in range(C) if m[r][c] == 0)
 print(res1)
 
-#1
-def dfs2(r, c, prev, visited):
+#2
+# A set is not needed:
+# infinite loops are not possible
+# as paths must be increasing
+def dfs2(r, c, prev):
     valid = (
         0 <= r < R
         and 0 <= c < C
-        and (r, c) not in visited
         and m[r][c] == prev + 1
     )
     if not valid:
@@ -44,11 +46,9 @@ def dfs2(r, c, prev, visited):
         return 1
     deltas = ((0, 1), (0, -1), (-1, 0), (1, 0))
     count = 0
-    visited.add((r, c))
     for dr, dc in deltas:
-        count += dfs2(r + dr, c + dc, prev + 1, visited)
-    visited.remove((r, c))
+        count += dfs2(r + dr, c + dc, prev + 1)
     return count
 
-res2 = sum(dfs2(r, c, -1, set()) for r in range(R) for c in range(C) if m[r][c] == 0)
+res2 = sum(dfs2(r, c, -1) for r in range(R) for c in range(C) if m[r][c] == 0)
 print(res2)

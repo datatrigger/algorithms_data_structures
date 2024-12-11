@@ -19,7 +19,7 @@ new_stones = stones
 for i in range(25):
     new_stones = itertools.chain.from_iterable(map(change, new_stones))
 res1 = sum(1 for _ in new_stones)
-print(res1)
+#print(res1)
 
 #2
 cache = {}
@@ -31,4 +31,5 @@ def f(stone, n):
     return cache[(stone, n)]        
 
 res2 = sum(f(stone, 75) for stone in stones)
+print(cache)
 print(res2)

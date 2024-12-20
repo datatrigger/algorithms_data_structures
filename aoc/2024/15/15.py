@@ -10,7 +10,6 @@ directions = {
     "<": (0, -1)
 }
 
-
 def get_input(input_file):
     with open(f"{input_file}.txt", "r") as f:
         lines = (line.strip() for line in f.readlines())

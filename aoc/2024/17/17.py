@@ -3,12 +3,13 @@ with open(f"{input_file}.txt", "r") as f:
     lines = [line.strip() for line in f.readlines()]
 
 # Preprocess
-a_register_value = int(lines[0].split(": ")[1])
+a_value = int(lines[0].split(": ")[1])
 program = lines[4].split(" ")[1].split(",")
 program = [int(instruction) for instruction in program]
 
-def run(a_register_value):
-    register = {"A": a_register_value, "B": 0, "C": 0}
+# 1
+def run(a_value):
+    register = {"A": a_value, "B": 0, "C": 0}
     output = []
 
     # Combo
@@ -70,7 +71,30 @@ def run(a_register_value):
         i = func(i + 1)
     return output
 
-output = run(a_register_value)
-print(output)
+output = run(a_value)
+print(",".join(map(str, output)))
 
 # 2
+# Write down the program with pen and paper.
+# The value of A is processed by chunks of 3 bits, starting from "the right",
+# then stops when A is truncated down to 0.
+# So, try building all sequences of 3-bit numbers that produce the correct output.
+# Backtrack when the sequence turns out to be wrong.
+
+def dfs(a_value):
+    output = run(a_value)
+    if len(output) == len(program):
+        if output == program:
+            candidates.append(a_value)
+        return
+    if output != program[-len(output):]:
+        return
+    for num in range(2 ** 3):
+        new_a_value = a_value << 3
+        new_a_value |= num
+        dfs(new_a_value)
+
+candidates = []
+for num in range(2 ** 3):
+    dfs(num)
+print(min(candidates))

@@ -1,3 +1,6 @@
+# Note: there seems to be a unique path with no branch
+# Taking this into account could simplify the approach below
+
 from collections import deque
 DELTAS = ((0, 1), (0, -1), (1, 0), (-1, 0))
 
@@ -38,22 +41,37 @@ def bfs(source):
 dist_from_start = bfs(start)
 dist_from_end = bfs(end)
 
-# Cheat
+# 1
 fastest = dist_from_start[end]
-cheats = 0
+cheats = set()
 save = 100
 for r in range(R):
-    for c in range(C):  
-        if not m[r][c] == "#":
+    for c in range(C):
+        if m[r][c] == "#":
             continue
-        start_to_wall = 1 + min(
-            dist_from_start.get((r + dr, c + dc), float("inf"))
-            for (dr, dc) in DELTAS
-            )
+        start_to_activation = dist_from_start[(r, c)]
         for dr, dc in DELTAS:
-            wall_to_end = 1 + dist_from_end.get((r + dr, c + dc), float("inf"))
-            cheat_time = start_to_wall + wall_to_end
+            deactivation_to_end = dist_from_end.get((r + 2 * dr, c + 2 * dc), float("inf"))
+            cheat_time = start_to_activation + 2 + deactivation_to_end
             if cheat_time <= fastest - save:
-                cheats += 1
+                cheats.add((r, c, r + 2 * dr, c + 2 * dc))
 
-print(cheats)  
+print(len(cheats))
+
+# 2
+cheats = set()
+save = 100
+for r in range(R):
+    for c in range(C):
+        if m[r][c] == "#":
+            continue
+        start_to_activation = dist_from_start[(r, c)]
+        for dr in range(-20, 21):
+            for dc in range(-20, 21):
+                if abs(dr) + abs(dc) > 20:
+                    continue
+                deactivation_to_end = dist_from_end.get((r + dr, c + dc), float("inf"))
+                cheat_time = start_to_activation + abs(dr) + abs(dc) + deactivation_to_end
+                if cheat_time <= fastest - save:
+                    cheats.add((r, c, r + dr, c + dc))
+print(len(cheats))

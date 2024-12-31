@@ -1,6 +1,6 @@
 digraph G {
 	subgraph x {
-		color=lightgrey style=filled
+		node [color=lightgrey style=filled]
 		x00 -> x01
 		x01 -> x02
 		x02 -> x03
@@ -47,7 +47,7 @@ digraph G {
 		x43 -> x44
 	}
 	subgraph y {
-		color=darkgrey style=filled
+		node [color=darkgrey style=filled]
 		y00 -> y01
 		y01 -> y02
 		y02 -> y03
@@ -94,7 +94,7 @@ digraph G {
 		y43 -> y44
 	}
 	subgraph z {
-		color=red style=filled
+		node [color=red style=filled]
 		z00 -> z01
 		z01 -> z02
 		z02 -> z03
@@ -142,7 +142,7 @@ digraph G {
 		z44 -> z45
 	}
 	subgraph AND {
-		color=blue style=filled
+		node [color=blue style=filled]
 		bbk
 		bjv
 		bmm
@@ -234,7 +234,7 @@ digraph G {
 		z31
 	}
 	subgraph OR {
-		color=green style=filled
+		node [color=green style=filled]
 		btf
 		cbc
 		cfp
@@ -281,7 +281,7 @@ digraph G {
 		z45
 	}
 	subgraph XOR {
-		color=yellow style=filled
+		node [color=yellow style=filled]
 		bbf
 		btp
 		cbv

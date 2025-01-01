@@ -72,43 +72,78 @@ print(num)
 # I could not figure out a programmatic approach for this one.
 # Get all edges + node type (x, y, z, and gate, or gate, xor gate)
 # Represent graph and visually identify swapped wires.
-
-subgraph = {subgraph: set() for subgraph in ("x", "y", "z", "AND", "OR", "XOR")}
-edges = []
-for o, (i1, op, i2) in gates.items():
-    subgraph[op].add(o) # Gate type
-    edges.append([i1, o]) # Edge 1
-    edges.append([i2, o]) # Edge 1
-    for node in [i1, i2, o]: # x, y, z nodes
-        first_letter = node[0]
-        if first_letter in "xyz":
-            subgraph[first_letter].add(node)
-
-for type, s in subgraph.items():
-    subgraph[type] = sorted(s)
+# Note: the graph looks better if the x nodes are connected,
+# same thing for y and z nodes (thanks Reddit).
 
 from graphviz import Digraph
-# https://graphviz.org/doc/info/colors.html
-color = {
-    "x": "lightgrey",
-    "y": "darkgrey",
-    "z": "red",
-    "AND": "blue",
-    "OR": "green",
-    "XOR": "yellow",
-}
-graph = Digraph('G')
-for type in ("x", "y", "z"):
-    with graph.subgraph(name=type) as s:
-        s.attr("node", color=color[type], style="filled")
-        s.edges(
-            [(subgraph[type][i], subgraph[type][i + 1]) for i in range(len(subgraph[type]) - 1)]
-        )
-for type in ("AND", "OR", "XOR"):
-    with graph.subgraph(name=type) as s:
-        s.attr("node", color=color[type], style="filled")
-        for node in subgraph[type]:
-            s.node(node)
-graph.edges(edges)
-graph.save("circuit.dot")
-#https://dreampuf.github.io/GraphvizOnline/?engine=dot
+
+def build_graph(input_file):
+    with open(f"{input_file}.txt", "r") as f:
+        lines = (line.strip() for line in f.readlines())
+    for line in lines:
+        if line == "":
+            break
+
+    gates = {}
+    for line in lines:
+        computation, output = line.split(" -> ")
+        gates[output] = computation.split(" ")
+    
+    if input_file == "input_swapped":
+        print("Swapping!")
+        for u, v in swaps:
+            gates[u], gates[v] = gates[v], gates[u]
+    else:
+        print("Not swapping.")
+
+    subgraph = {subgraph: set() for subgraph in ("x", "y", "z", "AND", "OR", "XOR")}
+    edges = []
+    for o, (i1, op, i2) in gates.items():
+        subgraph[op].add(o) # Gate type
+        edges.append([i1, o]) # Edge 1
+        edges.append([i2, o]) # Edge 1
+        for node in [i1, i2, o]: # x, y, z nodes
+            first_letter = node[0]
+            if first_letter in "xyz":
+                subgraph[first_letter].add(node)
+
+    for type, s in subgraph.items():
+        subgraph[type] = sorted(s)
+
+    # https://graphviz.org/doc/info/colors.html
+    color = {
+        "x": "lightgrey",
+        "y": "darkgrey",
+        "AND": "blue",
+        "OR": "green",
+        "XOR": "yellow",
+    }
+    graph = Digraph('G')
+    for type in ("x", "y"):
+        with graph.subgraph(name=type) as s:
+            s.attr("node", color=color[type], style="filled")
+            s.edges(
+                [(subgraph[type][i], subgraph[type][i + 1]) for i in range(len(subgraph[type]) - 1)]
+            )
+    for type in ("AND", "OR", "XOR"):
+        with graph.subgraph(name=type) as s:
+            s.attr("node", color=color[type], style="filled")
+            for node in subgraph[type]:
+                s.node(node)
+    graph.edges(edges)
+    graph.edges([(subgraph["z"][i], subgraph["z"][i + 1]) for i in range(len(subgraph["z"]) - 1)])
+    graph.save(f"{input_file}.dot")
+    return
+
+swaps = [
+    ("z11", "rpv"), #~z11
+    ("ctg", "rpb"), #~z15
+    ("z31", "dmh"), #~z31
+    ("z38", "dvq"), #z15
+    ]
+build_graph("input")
+build_graph("input_swapped")
+
+# t = ["drq", "rpv", "ctg", "rpb", "z31", "dmh", "trm", "z38"]
+res2 = ",".join(sorted([gate for gates in swaps for gate in gates]))
+print(res2)

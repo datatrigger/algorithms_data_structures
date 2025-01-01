@@ -93,54 +93,6 @@ digraph G {
 		y42 -> y43
 		y43 -> y44
 	}
-	subgraph z {
-		node [color=red style=filled]
-		z00 -> z01
-		z01 -> z02
-		z02 -> z03
-		z03 -> z04
-		z04 -> z05
-		z05 -> z06
-		z06 -> z07
-		z07 -> z08
-		z08 -> z09
-		z09 -> z10
-		z10 -> z11
-		z11 -> z12
-		z12 -> z13
-		z13 -> z14
-		z14 -> z15
-		z15 -> z16
-		z16 -> z17
-		z17 -> z18
-		z18 -> z19
-		z19 -> z20
-		z20 -> z21
-		z21 -> z22
-		z22 -> z23
-		z23 -> z24
-		z24 -> z25
-		z25 -> z26
-		z26 -> z27
-		z27 -> z28
-		z28 -> z29
-		z29 -> z30
-		z30 -> z31
-		z31 -> z32
-		z32 -> z33
-		z33 -> z34
-		z34 -> z35
-		z35 -> z36
-		z36 -> z37
-		z37 -> z38
-		z38 -> z39
-		z39 -> z40
-		z40 -> z41
-		z41 -> z42
-		z42 -> z43
-		z43 -> z44
-		z44 -> z45
-	}
 	subgraph AND {
 		node [color=blue style=filled]
 		bbk
@@ -151,11 +103,11 @@ digraph G {
 		bvk
 		cpj
 		cqf
-		ctg
 		cwk
 		djc
 		djv
 		dkt
+		dmh
 		dnp
 		dps
 		drq
@@ -210,6 +162,8 @@ digraph G {
 		rgp
 		rmq
 		rns
+		rpb
+		rpv
 		rsd
 		rtp
 		rvf
@@ -230,8 +184,6 @@ digraph G {
 		wdw
 		wmk
 		wqh
-		z11
-		z31
 	}
 	subgraph OR {
 		node [color=green style=filled]
@@ -247,6 +199,7 @@ digraph G {
 		dtb
 		dtf
 		dvh
+		dvq
 		fgs
 		fnn
 		fpp
@@ -277,7 +230,6 @@ digraph G {
 		tkf
 		wkt
 		wmb
-		z38
 		z45
 	}
 	subgraph XOR {
@@ -287,12 +239,11 @@ digraph G {
 		cbv
 		cpf
 		cpg
+		ctg
 		ctw
 		djk
 		dmf
-		dmh
 		dqd
-		dvq
 		dvv
 		fgk
 		fjg
@@ -316,8 +267,6 @@ digraph G {
 		pgj
 		rbf
 		rdf
-		rpb
-		rpv
 		rtg
 		rww
 		sbn
@@ -340,6 +289,7 @@ digraph G {
 		z08
 		z09
 		z10
+		z11
 		z12
 		z13
 		z14
@@ -359,12 +309,14 @@ digraph G {
 		z28
 		z29
 		z30
+		z31
 		z32
 		z33
 		z34
 		z35
 		z36
 		z37
+		z38
 		z39
 		z40
 		z41
@@ -418,8 +370,8 @@ digraph G {
 	hhv -> trm
 	y08 -> trg
 	x08 -> trg
-	x31 -> z31
-	y31 -> z31
+	fgs -> z31
+	ctw -> z31
 	x14 -> bjv
 	y14 -> bjv
 	y26 -> sbn
@@ -556,8 +508,8 @@ digraph G {
 	nrq -> tnw
 	hwk -> btk
 	cbc -> btk
-	hhv -> dvq
-	pqr -> dvq
+	bvk -> dvq
+	trm -> dvq
 	rfq -> nwb
 	bbk -> nwb
 	nhf -> nck
@@ -566,8 +518,8 @@ digraph G {
 	kbg -> z42
 	x11 -> hnn
 	y11 -> hnn
-	fgs -> dmh
-	ctw -> dmh
+	x31 -> dmh
+	y31 -> dmh
 	y36 -> rbf
 	x36 -> rbf
 	y01 -> vph
@@ -602,8 +554,8 @@ digraph G {
 	x43 -> fjg
 	y02 -> btp
 	x02 -> btp
-	hnn -> rpv
 	dvh -> rpv
+	hnn -> rpv
 	cpf -> z24
 	btf -> z24
 	y42 -> rww
@@ -678,8 +630,8 @@ digraph G {
 	x40 -> dmf
 	y08 -> frw
 	x08 -> frw
-	dvh -> z11
 	hnn -> z11
+	dvh -> z11
 	y35 -> qvt
 	x35 -> qvt
 	qvj -> fps
@@ -698,12 +650,12 @@ digraph G {
 	jcd -> jww
 	srm -> z10
 	kvh -> z10
-	y15 -> ctg
 	x15 -> ctg
+	y15 -> ctg
 	y34 -> ngd
 	x34 -> ngd
-	bvk -> z38
-	trm -> z38
+	hhv -> z38
+	pqr -> z38
 	dmh -> dtf
 	bmm -> dtf
 	x20 -> gjs
@@ -750,8 +702,8 @@ digraph G {
 	nck -> tgr
 	fps -> z36
 	rbf -> z36
-	x15 -> rpb
 	y15 -> rpb
+	x15 -> rpb
 	sqh -> wmb
 	rpb -> wmb
 	spv -> sbf
@@ -816,4 +768,49 @@ digraph G {
 	jww -> nsp
 	x38 -> bvk
 	y38 -> bvk
+	z00 -> z01
+	z01 -> z02
+	z02 -> z03
+	z03 -> z04
+	z04 -> z05
+	z05 -> z06
+	z06 -> z07
+	z07 -> z08
+	z08 -> z09
+	z09 -> z10
+	z10 -> z11
+	z11 -> z12
+	z12 -> z13
+	z13 -> z14
+	z14 -> z15
+	z15 -> z16
+	z16 -> z17
+	z17 -> z18
+	z18 -> z19
+	z19 -> z20
+	z20 -> z21
+	z21 -> z22
+	z22 -> z23
+	z23 -> z24
+	z24 -> z25
+	z25 -> z26
+	z26 -> z27
+	z27 -> z28
+	z28 -> z29
+	z29 -> z30
+	z30 -> z31
+	z31 -> z32
+	z32 -> z33
+	z33 -> z34
+	z34 -> z35
+	z35 -> z36
+	z36 -> z37
+	z37 -> z38
+	z38 -> z39
+	z39 -> z40
+	z40 -> z41
+	z41 -> z42
+	z42 -> z43
+	z43 -> z44
+	z44 -> z45
 }

@@ -144,6 +144,5 @@ swaps = [
 build_graph("input")
 build_graph("input_swapped")
 
-# t = ["drq", "rpv", "ctg", "rpb", "z31", "dmh", "trm", "z38"]
 res2 = ",".join(sorted([gate for gates in swaps for gate in gates]))
 print(res2)

@@ -21,7 +21,7 @@ def is_possible(design: str):
 count = sum(1 for design in designs if is_possible(design))
 print(count)
 
-# 1
+# 2
 cache = {}
 def ways_to_make(design: str):
     if design == "":

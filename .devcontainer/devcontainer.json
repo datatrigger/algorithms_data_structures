@@ -9,6 +9,6 @@
             ]
         }
     },
-    "postCreateCommand": "pip install jupyter",
+    "postCreateCommand": "pip install jupyter ipykernel",
     "remoteUser": "vscode"
 }
